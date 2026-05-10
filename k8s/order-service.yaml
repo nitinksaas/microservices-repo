@@ -1,0 +1,15 @@
+apiVersion: v2
+kind: Service
+metadata:
+  name: order-service
+  annotations:
+    cloud.google.com/backend-config: '{"default": "order-backendconfig"}'
+spec:
+  type: ClusterIP
+  selector:
+    app: order-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP

@@ -2,24 +2,39 @@ package com.microservices.order_service.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.microservices.order_service.interfaces.OrderEvent;
 import com.microservices.order_service.interfaces.PaymentClient;
 import com.microservices.order_service.interfaces.UserClient;
+import com.microservices.order_service.service.KafkaProducerService;
 
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
 
-	// @Autowired
-	// private RestTemplate restTemplate;
+	private final KafkaProducerService kafkaProducerService;
+
+	public OrderController(KafkaProducerService kafkaProducerService) {
+		this.kafkaProducerService = kafkaProducerService;
+	}
 
 	@Autowired
 	UserClient userClient;
 
 	@Autowired
 	PaymentClient paymentClient;
+	
+	@PostMapping
+	public String createOrder(@RequestBody OrderEvent orderEvent) {
+
+		kafkaProducerService.sendOrderEvent(orderEvent);
+
+		return "Order created and event published successfully";
+	}
 
 	@GetMapping
 	public String createOrder() {
@@ -31,9 +46,9 @@ public class OrderController {
 		 * null, String.class);
 		 */
 
-		String user =  userClient.getUser(1L);
+		String user = userClient.getUser(1L);
 		String payment = paymentClient.doPayment();
 
-		return "Order created for " + user + " | " + payment +"via Feign";
+		return "Order created for " + user + " | " + payment + "via Feign";
 	}
 }

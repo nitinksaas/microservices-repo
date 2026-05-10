@@ -8,19 +8,38 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Consumer;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-class Employee {
-	String name;
-	List<String> skills;
+final class Employee {
+	private String name;
+	private List<String> skills;
 
 	public Employee(String name, List<String> skills) {
 		super();
 		this.name = name;
-		this.skills = skills;
+		// this.skills = new ArrayList<>(skills);
+		ArrayList<String> arr = new ArrayList<>();
+		for (Iterator iterator = skills.iterator(); iterator.hasNext();) {
+			String string = (String) iterator.next();
+
+			arr.add(string);
+
+		}
+
+		this.skills = new ArrayList<>(arr);
+
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public List<String> getSkills() {
+		return new ArrayList<String>(this.skills);
 	}
 
 }
@@ -28,6 +47,29 @@ class Employee {
 public class Testing {
 
 	public static void main(String[] args) {
+		
+		ExecutorService executor = Executors.newFixedThreadPool(3);
+		
+		List<String> names = List.of("Nitin", "Rahul", "Amit");
+
+		List<Integer> result2 = names.stream()
+		    .filter(name -> name.length() > 4) // select
+		    .map(String::length)               // transform
+		    .collect(Collectors.toList());
+
+		List<String> emplist = new ArrayList<>();
+		emplist.add("Java");
+
+		Employee e = new Employee("Nitin", emplist);
+
+		emplist.add("Spring"); // 😱 modifies internal state
+
+		System.out.println(result2);
+
+		String s1 = "Hello";
+		String s2 = "Hellso";
+
+		System.out.println(s1 == s2);
 
 		String s = "abcabcdbbabcdeabcd";
 
@@ -88,7 +130,7 @@ public class Testing {
 		Map<Object, Optional<Vehicle>> map = vehicleList.stream()
 				.collect(Collectors.groupingBy(v -> v.color, Collectors.maxBy(Comparator.comparing(Vehicle::getAge))));
 
-		// System.out.println(map);
+		System.out.println(map);
 
 		List<String> car = new ArrayList<String>();
 

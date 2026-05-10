@@ -1,51 +1,133 @@
 package com.test;
 
-class TreeNode {
-	int val;
-	TreeNode left;
-	TreeNode right;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
-	TreeNode(int val) {
-		this.val = val;
+
+public record Demo (
+
+  int num,
+  String name
+		
+		) {
+	
+    public String getEmployeeInfo() {
+        return name + " earns " + name;
+    }
+	
+
+class Item {
+	String items;
+
+	public String getItems() {
+		return items;
+	}
+
+	public void setItems(String items) {
+		this.items = items;
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.items;
 	}
 }
 
-public class Demo {
+class Order {
+	List<Item> items;
+
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [items=" + items + "]";
+	}
+
+}
+
+class Employee1 {
+
+	String name;
+	int salary;
+
+	Employee1(String name, int salary) {
+		this.name = name;
+		this.salary = salary;
+	}
+
+	public int getSalary() {
+		return salary;
+	}
+
+	public String getName() {
+		return name;
+	}
+}
+
+ class Demo2 {
 
 	public static void main(String[] args) {
+		
+		Demo Demo2 = new Demo(1, "abvc");
+		
+		
+		
+		List<Item> item = new ArrayList<Item>();
+		Item item1 = new Item();
+		item1.setItems("book1");
+		Item item2 = new Item();
+		item2.setItems("book2");
+		Item item3 = new Item();
+		item3.setItems("book3");
 
-		TreeNode root = new TreeNode(3);
+		item.add(item1);
+		item.add(item2);
+		item.add(item3);
 
-		root.left = new TreeNode(5);
-		root.right = new TreeNode(1);
+		List<Item> itemMore = new ArrayList<Item>();
+		Item item4 = new Item();
+		item4.setItems("book4");
 
-		root.left.left = new TreeNode(6);
-		root.left.right = new TreeNode(2);
+		Item item5 = new Item();
+		item5.setItems("book5");
 
-		root.right.left = new TreeNode(0);
-		root.right.right = new TreeNode(8);
+		Item item6 = new Item();
+		item6.setItems("book4");
 
-		root.left.right.left = new TreeNode(7);
-		root.left.right.right = new TreeNode(4);
+		Item item7 = new Item();
+		item7.setItems("book5");
 
-		// p and q
-		TreeNode p = root.left; // 5
-		TreeNode q = root.left.right.right; // 4
+		itemMore.add(item4);
+		itemMore.add(item5);
+		itemMore.add(item6);
+		itemMore.add(item7);
 
-		// call your function
-		TreeNode lca = lowestCommonAncestor(root, p, q);
+		Order order = new Order();
+		order.setItems(item);
 
-		// System.out.println(lca.val); // Expected: 3
-		// System.out.println(root.left.right.right.val);
+		Order order2 = new Order();
+		order2.setItems(itemMore);
+
+		List<Order> orders = new ArrayList<Order>();
+		orders.add(order);
+		orders.add(order2);
+		System.out.println(orders);
+
+		
+		List<Item> items =
+		        orders.stream()
+		              .flatMap(ord -> ord.getItems().stream())
+		              .toList();
+		System.out.println(items);
 	}
+	
+ }
 
-	private static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-
-		if (p.left != null && p.left.val == root.val) {
-
-			lowestCommonAncestor(root, p, q);
-		}
-
-		return new TreeNode(0);
-	}
-}

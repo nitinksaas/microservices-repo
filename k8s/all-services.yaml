@@ -1,0 +1,129 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2026-05-03T08:42:54Z"
+    labels:
+      component: apiserver
+      provider: kubernetes
+    name: kubernetes
+    namespace: default
+    resourceVersion: "1777797774823887006"
+    uid: c3215cb9-7c9d-4f15-b574-25391ff0cc12
+  spec:
+    clusterIP: 34.118.224.1
+    clusterIPs:
+    - 34.118.224.1
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 443
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/backend-config: '{"default": "order-backendconfig"}'
+      cloud.google.com/neg: '{"ingress":true}'
+      cloud.google.com/neg-status: '{"network_endpoint_groups":{"80":"k8s1-468da185-default-order-service-80-98bcd48b"},"zones":["us-central1-a","us-central1-f"]}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"cloud.google.com/backend-config":"{\"default\": \"order-backendconfig\"}"},"name":"order-service","namespace":"default"},"spec":{"ports":[{"port":80,"protocol":"TCP","targetPort":8082}],"selector":{"app":"order-service"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-05-04T06:28:38Z"
+    name: order-service
+    namespace: default
+    resourceVersion: "1777899649406927019"
+    uid: c6b9d397-b75e-4563-bc82-9329ec4cf842
+  spec:
+    clusterIP: 34.118.227.171
+    clusterIPs:
+    - 34.118.227.171
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8082
+    selector:
+      app: order-service
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/backend-config: '{"default": "payment-backendconfig"}'
+      cloud.google.com/neg: '{"ingress":true}'
+      cloud.google.com/neg-status: '{"network_endpoint_groups":{"80":"k8s1-468da185-default-payment-service-80-40ad18d3"},"zones":["us-central1-a","us-central1-f"]}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"cloud.google.com/backend-config":"{\"default\": \"payment-backendconfig\"}"},"name":"payment-service","namespace":"default"},"spec":{"ports":[{"port":80,"protocol":"TCP","targetPort":8083}],"selector":{"app":"payment-service"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-05-04T06:25:29Z"
+    name: payment-service
+    namespace: default
+    resourceVersion: "1777884988917823015"
+    uid: b1b9be36-6367-4979-9e14-ee581d11d85d
+  spec:
+    clusterIP: 34.118.235.61
+    clusterIPs:
+    - 34.118.235.61
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8083
+    selector:
+      app: payment-service
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/backend-config: '{"default": "user-backendconfig"}'
+      cloud.google.com/neg: '{"ingress":true}'
+      cloud.google.com/neg-status: '{"network_endpoint_groups":{"80":"k8s1-468da185-default-user-service-80-dd9f94bc"},"zones":["us-central1-a","us-central1-f"]}'
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"cloud.google.com/backend-config":"{\"default\": \"user-backendconfig\"}"},"name":"user-service","namespace":"default"},"spec":{"ports":[{"port":80,"protocol":"TCP","targetPort":8081}],"selector":{"app":"user-service"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-05-04T06:27:55Z"
+    name: user-service
+    namespace: default
+    resourceVersion: "1777884978606255002"
+    uid: 746bad78-eda0-4145-a014-9434be5cec67
+  spec:
+    clusterIP: 34.118.233.42
+    clusterIPs:
+    - 34.118.233.42
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8081
+    selector:
+      app: user-service
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
